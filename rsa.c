@@ -1,13 +1,13 @@
 #include <stdio.h>
 #include <math.h>
 
-#define MAX_NUM 100000
+#define MAX_NUM pow(2, 216384)
 
 // Function to check if a number is prime
-int is_prime(int num) {
+long double is_prime(long double num) {
   if (num < 2) return 0;
-  for (int i = 2; i <= sqrt(num); i++) {
-    if (num % i == 0) return 0;
+  for (long double i = 2; i <= sqrt(num); i++) {
+    if (fmod(num, i) == 0) return 0;
   }
   return 1;
 }
@@ -27,17 +27,17 @@ int main(int argc, char* argv[]) {
   }
 
   // Read in the numbers from the file and factorize them
-  int num;
-  while (fscanf(file, "%d", &num) == 1) {
+  long double num;
+  while (fscanf(file, "%Lf", &num) == 1) {
     if (num > MAX_NUM) {
-      printf("Error: Number %d is too large to factorize.\n", num);
+      printf("Error: Number %Lf is too large to factorize.\n", num);
       continue;
     }
 
-    printf("%d=", num);
-    int p, q;
-    for (int i = 2; i <= sqrt(num); i++) {
-      if (num % i == 0 && is_prime(i) && is_prime(num / i)) {
+    printf("%0.0Lf=", num);
+    long double p, q;
+    for (long double i = 2; i <= sqrt(num); i++) {
+      if (fmod(num, i) == 0 && is_prime(i) && is_prime(num / i)) {
 	p = i;
 	q = num / i;
 	break;
@@ -45,7 +45,7 @@ int main(int argc, char* argv[]) {
     }
 
     if (p && q) {
-      printf("%d*%d\n", p, q);
+      printf("%0.0Lf*%0.0Lf\n", q, p);
     } else {
       printf("Unable to factorize.\n");
     }

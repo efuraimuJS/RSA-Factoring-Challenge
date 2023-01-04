@@ -14,18 +14,18 @@ int main(int argc, char* argv[]) {
     fprintf(stderr, "Error: unable to open file '%s' for reading\n", argv[1]);
     return 1;
   }
-
   // Read the numbers from the file and factorize them
-  int n;
-  while (fscanf(file, "%d", &n) == 1) {
+  long double n;
+  while (fscanf(file, "%Lf", &n) == 1) {
     // Find the smallest factor of n
-    int factor = 2;
-    while (n % factor != 0) {
+    long double factor = 2;
+    long double result = fmod(n, factor);
+    while (result != 0) {
       factor++;
     }
 
     // Print the factorization of n
-    printf("%d=%d*%d\n", n, n / factor, factor);
+    printf("%0.0Lf=%0.0Lf*%0.0Lf\n", n, n / factor, factor);
   }
 
   // Close the file
